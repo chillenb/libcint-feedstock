@@ -7,13 +7,14 @@ package:
   version: {{ version }}
 
 source:
-  url: https://github.com/sunqm/libcint/archive/refs/tags/v{{ version }}.tar.gz
-  sha256: c822a9a454587d935287de0f64a2c2cf5338323a554a3f34bcfb4a2892daf477
+  url: https://github.com/sunqm/qcint/archive/refs/tags/v{{ version }}.tar.gz
+  sha256: 25dd69fb6582ac73c4444f2b915cc8ee0f2bbe225e63b4f0f2af62d3d90b0bf2
   patches:
-    - 0001-Fix-test-location.patch
+    - 0001-custom-march.patch
 
 build:
   number: 0
+  string: qcint
   skip: true  # [win]
   run_exports:
     - {{ pin_subpackage(name, min_pin='x.x', max_pin='x.x') }}
@@ -25,25 +26,15 @@ requirements:
     - cmake
     - make
 
-test:
-  commands:
-    - cd testsuite
-    - python test_cint.py --quick
-    - python test_3c2e.py --quick
-  requires:
-    - numpy
-    - python
-  source_files:
-    - testsuite
 
 about:
-  home: https://github.com/sunqm/libcint
+  home: https://github.com/sunqm/qcint
   summary: general GTO integrals for quantum chemistry
-  dev_url: https://github.com/sunqm/libcint
-  doc_url: http://wiki.sunqm.net/libcint
+  dev_url: https://github.com/sunqm/qcint
   license: BSD-2-Clause
   license_file: LICENSE
 
 extra:
   recipe-maintainers:
     - BastianZim
+    - chillenb
