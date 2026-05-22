@@ -21,8 +21,8 @@ build:
 
 requirements:
   build:
-    - {{ compiler('c') }}
-    - {{ stdlib("c") }}
+    - {{ compiler('c') }} # [not win]
+    - {{ stdlib("c") }} # [not win]
     - gcc_win-64  # [win]
     - cmake
     - make
