@@ -12,4 +12,3 @@ cmake ${CMAKE_ARGS} -DCMAKE_BUILD_TYPE=Release \
 cd build
 
 make install
-
