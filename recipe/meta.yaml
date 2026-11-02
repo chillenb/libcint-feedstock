@@ -1,5 +1,5 @@
 {% set name = "libcint" %}
-{% set version = "6.2.0" %}
+{% set version = "6.2.1" %}
 
 package:
   name: {{ name|lower }}
@@ -7,13 +7,13 @@ package:
 
 source:
   url: https://github.com/sunqm/libcint/archive/refs/tags/v{{ version }}.tar.gz
-  sha256: cf30825bc5748b556d808381ebbe835652dae9e5c3931d69e77e075bd8a9101d
+  sha256: 726241d9be6fdaf959707a64b923b54b29e1a50f572ab476cac38396a7c730c9
   patches:
     - 0001-Fix-test-location.patch
     - 0002-Link-quadmath-and-libm-PRIVATE.patch
 
 build:
-  number: 1
+  number: 0
   run_exports:
     - {{ pin_subpackage(name, min_pin='x.x', max_pin='x.x') }}
   force_ignore_keys:
