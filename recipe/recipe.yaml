@@ -1,0 +1,67 @@
+schema_version: 1
+
+context:
+  version: 6.2.1
+
+package:
+  name: libcint
+  version: ${{ version }}
+
+source:
+  url: https://github.com/sunqm/libcint/archive/refs/tags/v${{ version }}.tar.gz
+  sha256: 726241d9be6fdaf959707a64b923b54b29e1a50f572ab476cac38396a7c730c9
+  patches:
+    - 0001-Fix-test-location.patch
+
+build:
+  number: 1
+
+requirements:
+  build:
+    - if: win
+      then:
+        - ${{ compiler('m2w64_c') }}
+        - ${{ stdlib('m2w64_c') }}
+      else:
+        - ${{ compiler('c') }}
+        - ${{ stdlib('c') }}
+    - cmake
+    - ninja
+  run_exports:
+    - ${{ pin_subpackage('libcint', lower_bound='x.x', upper_bound='x.x') }}
+
+tests:
+  - files:
+      source:
+        - testsuite/
+    requirements:
+      run:
+        - numpy
+        - python
+    script:
+      # the tests load libcint from sys.prefix/lib, but on Windows it is
+      # installed to Library/bin
+      - if: win
+        then:
+          - if not exist "%CONDA_PREFIX%\lib" mkdir "%CONDA_PREFIX%\lib"
+          - copy /Y "%CONDA_PREFIX%\Library\bin\libcint.dll" "%CONDA_PREFIX%\lib\libcint.dll"
+      - cd testsuite
+      - python test_cint.py --quick
+      - python test_3c2e.py --quick
+  - package_contents:
+      include:
+        - cint.h
+        - cint_funcs.h
+
+about:
+  summary: general GTO integrals for quantum chemistry
+  license: Apache-2.0
+  license_file: LICENSE
+  homepage: https://github.com/sunqm/libcint
+  repository: https://github.com/sunqm/libcint
+  documentation: http://wiki.sunqm.net/libcint
+
+extra:
+  recipe-maintainers:
+    - BastianZim
+    - chillenb
