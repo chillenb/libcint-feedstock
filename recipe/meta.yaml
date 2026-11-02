@@ -10,7 +10,6 @@ source:
   sha256: 726241d9be6fdaf959707a64b923b54b29e1a50f572ab476cac38396a7c730c9
   patches:
     - 0001-Fix-test-location.patch
-    - 0002-Link-quadmath-and-libm-PRIVATE.patch
 
 build:
   number: 0
